@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_colors.dart';
-import 'horizontal_card.dart';
+import '../../constants/app_colors.dart';
+import '../cards/horizontal_card.dart';
 
 class HorizontalList extends StatelessWidget {
   const HorizontalList({Key? key, required this.title, required this.subtitle})
@@ -26,12 +26,7 @@ class HorizontalList extends StatelessWidget {
               children: [
                 TextSpan(
                   text: '//  ',
-                  style: TextStyle(
-                    color: AppColors.green1,
-                    fontSize: 20,
-                    fontFamily: 'Manrope',
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: Theme.of(context).textTheme.headline1?.copyWith(color: AppColors.green1,),
                 ),
                 TextSpan(
                   text: title,
@@ -45,12 +40,7 @@ class HorizontalList extends StatelessWidget {
           ),
           Text(
             subtitle,
-            style: TextStyle(
-              color: AppColors.blue5,
-              fontSize: 14,
-              fontFamily: 'Manrope',
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(color: AppColors.blue5,)
           ),
           const SizedBox(
             height: 24,

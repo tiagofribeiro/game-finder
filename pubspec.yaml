@@ -62,6 +62,26 @@ flutter:
   assets:
     - assets/img/
     - assets/img/icons/logo-horizontal.svg
+    - assets/img/icons/busca.svg
+    - assets/img/icons/favorito-ativo.svg
+    - assets/img/icons/favorito-inativo.svg
+    - assets/img/icons/filtrar.svg
+    - assets/img/icons/game.svg
+    - assets/img/icons/listagem.svg
+    - assets/img/icons/ordenar.svg
+    - assets/img/icons/seta.svg
+    - assets/img/icons/voltar.svg
+    - assets/img/platforms/android.svg
+    - assets/img/platforms/ios-mac.svg
+    - assets/img/platforms/nintendo.svg
+    - assets/img/platforms/playstation.svg
+    - assets/img/platforms/sega.svg
+    - assets/img/platforms/windows.svg
+    - assets/img/platforms/xbox.svg
+    - assets/img/empty_state/dino-pixel.svg
+    - assets/img/empty_state/ghost-pixel.svg
+    - assets/img/empty_state/heart-pixel.svg
+    - assets/img/empty_state/skull-pixel.svg
         
 
 

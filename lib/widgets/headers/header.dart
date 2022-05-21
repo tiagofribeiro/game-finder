@@ -7,10 +7,10 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       height: 67,
       width: double.maxFinite,
-      decoration: BoxDecoration(),
+      decoration:  const BoxDecoration(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -19,7 +19,7 @@ class Header extends StatelessWidget {
             height: 22,
             width: 151,
           ),
-          Text('a'),
+          Image.asset('assets/img/login.png'),
         ],
       ),
     );
