@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_card_styles.dart';
+import '../../models/platforms_model.dart';
+import '../../utilities/app_functions.dart';
 
 class HorizontalCard extends StatelessWidget {
-  const HorizontalCard({Key? key}) : super(key: key);
+  HorizontalCard({
+    Key? key,
+    required this.title,
+    required this.released,
+    required this.platforms,
+    required this.metascore,
+    required this.img,
+  }) : super(key: key);
+
+  late int? metascore;
+  late String? img;
+  late List<ParentPlatforms>? platforms;
+  late String? title;
+  late String? released;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +39,27 @@ class HorizontalCard extends StatelessWidget {
                 SizedBox(
                   width: double.maxFinite,
                   height: 140,
-                  child:
-                      Image.asset('assets/img/sonico.png', fit: BoxFit.cover),
+                  child: Image.network(
+                    img ?? '',
+                    errorBuilder: ((context, error, stackTrace) {
+                      return Image.asset(
+                        'assets/img/game_placeholder.png',
+                        fit: BoxFit.cover,
+                      );
+                    }),
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                          child: CircularProgressIndicator(
+                              color: AppColors.green1,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null));
+                    },
+                  ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(20),
@@ -33,20 +68,61 @@ class HorizontalCard extends StatelessWidget {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text("icones "),
-                          Text("metacritic "),
+                        children: [
+                          Row(
+                            children: [
+                              for (String svg in AppFunctions.setPlatformIcons(
+                                  platforms!)) ...[
+                                SvgPicture.asset(
+                                  svg,
+                                  height: 17,
+                                  width: 17,
+                                ),
+                                const SizedBox(width: 8)
+                              ]
+                            ],
+                          ),
+                          if (metascore != null) ...[
+                            Container(
+                              alignment: Alignment.center,
+                              height: 24,
+                              width: 24,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 2,
+                                    color: metascore! >= 75
+                                        ? AppColors.green1
+                                        : metascore! >= 50
+                                            ? AppColors.yellow1
+                                            : AppColors.red1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Center(
+                                child: Text(metascore.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.copyWith(
+                                            color: metascore! >= 75
+                                                ? AppColors.green1
+                                                : metascore! >= 50
+                                                    ? AppColors.yellow1
+                                                    : AppColors.red1)),
+                              ),
+                            ),
+                          ]
                         ],
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Sonic Frontiers',
+                        title ?? '?',
                         style: Theme.of(context).textTheme.headline2,
                       ),
-                      Text(
-                        '2022',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(color: AppColors.blue5,)
-                      ),
+                      Text(released == '' ? 'TBA' : released!.substring(0,4),
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    color: AppColors.blue5,
+                                  )),
                     ],
                   ),
                 ),

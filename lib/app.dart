@@ -4,8 +4,10 @@ import 'package:game_finder/constants/app_theme.dart';
 import 'package:game_finder/features/home/home_view.dart';
 import 'package:game_finder/features/search/search_view.dart';
 import 'package:game_finder/features/favorites/favorites_view.dart';
+import 'package:game_finder/widgets/base/background.dart';
 
 import 'constants/app_colors.dart';
+import 'services/app_services.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -28,7 +30,6 @@ class FirstView extends StatefulWidget {
 }
 
 class _FirstViewState extends State<FirstView> {
-  
   int _selectedPageIndex = 1;
 
   PageController pageController = PageController();
@@ -49,59 +50,57 @@ class _FirstViewState extends State<FirstView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: RadialGradient(
-          center: const Alignment(1, -1.1),
-          radius: 1.3,
-          colors: [AppColors.blue3, AppColors.blue1],
-        ),
-      ),
-      child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          selectedFontSize: 1,
-          unselectedFontSize: 1,
-          enableFeedback: false,
-          elevation: 0.0,
-          currentIndex: _selectedPageIndex,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          backgroundColor: AppColors.blue3,
-          onTap: onBottomTapped,
-          items: [
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/img/icons/busca.svg',
-                    height: 24, width: 24, color: AppColors.blue5),
-                activeIcon: SvgPicture.asset('assets/img/icons/busca.svg',
-                    height: 24, width: 24, color: AppColors.green1),
-                label: 'busca'),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/img/icons/game.svg',
-                    height: 24, width: 24, color: AppColors.blue5),
-                activeIcon: SvgPicture.asset('assets/img/icons/game.svg',
-                    height: 24, width: 24, color: AppColors.green1),
-                label: 'home'),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/img/icons/favorito-inativo.svg',
-                    height: 24, width: 24, color: AppColors.blue5),
-                activeIcon: SvgPicture.asset('assets/img/icons/favorito-inativo.svg',
-                    height: 24, width: 24, color: AppColors.green1),
-                label: 'favs'),
-          ],
-        ),
-        backgroundColor: Colors.transparent,
-        body: PageView(
-          controller: pageController,
-          onPageChanged: (page) {
-            setState(() {
-              _selectedPageIndex = page;
-            });
-          },
-          children: [
-            SearchView(),
-            HomeView(),
-            FavoritesView(),
-          ],
+    return Background(
+      content: SafeArea(
+        child: Scaffold(
+          bottomNavigationBar: BottomNavigationBar(          
+            selectedFontSize: 1,
+            unselectedFontSize: 1,
+            enableFeedback: false,
+            elevation: 0.0,
+            currentIndex: _selectedPageIndex,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            backgroundColor: AppColors.blue3,
+            onTap: onBottomTapped,
+            items: [
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset('assets/img/icons/busca.svg',
+                      height: 24, width: 24, color: AppColors.blue5),
+                  activeIcon: SvgPicture.asset('assets/img/icons/busca.svg',
+                      height: 24, width: 24, color: AppColors.green1),
+                  label: 'busca'),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset('assets/img/icons/game.svg',
+                      height: 24, width: 24, color: AppColors.blue5),
+                  activeIcon: SvgPicture.asset('assets/img/icons/game.svg',
+                      height: 24, width: 24, color: AppColors.green1),
+                  label: 'home'),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset('assets/img/icons/favorito-ativo.svg',
+                      height: 24, width: 24, color: AppColors.blue5),
+                  activeIcon: SvgPicture.asset(
+                      'assets/img/icons/favorito-ativo.svg',
+                      height: 24,
+                      width: 24,
+                      color: AppColors.green1),
+                  label: 'favs'),
+            ],
+          ),
+          backgroundColor: Colors.transparent,
+          body: PageView(
+            controller: pageController,
+            onPageChanged: (page) {
+              setState(() {
+                _selectedPageIndex = page;
+              });
+            },
+            children: const [
+              SearchView(),
+              HomeView(),
+              FavoritesView(),
+            ],
+          ),
         ),
       ),
     );
