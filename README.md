@@ -44,7 +44,7 @@ A few resources showcased in this project:
 
 
 ## Screenshots
-![screenhot 1](./assets/screenshots/1.jpg)  ![screenhot 2](./assets/screenshots/1.jpg)    ![screenhot 3](./assets/screenshots/1.jpg)  
+![screenhot 1](./assets/img/screenshots/1.jpg)  ![screenhot 2](./assets/img/screenshots/2.jpg)    ![screenhot 3](./assets/img/screenshots/3.jpg)  
 
 
 <br>
