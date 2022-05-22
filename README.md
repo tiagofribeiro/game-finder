@@ -1,6 +1,7 @@
 # GameFinder
+![version](https://img.shields.io/badge/version-0.9-yellow)
 
- ![logo](https://github.com/tiagofribeiro/game-finder/blob/master/assets/icon/icon.png)   
+ ![logo](/assets/icon/icon.png)   
  
 <br>
 
@@ -43,7 +44,7 @@ A few resources showcased in this project:
 
 
 ## Screenshots
-
+![screenhot 1](./assets/screenshots/1.jpg)  ![screenhot 2](./assets/screenshots/1.jpg)    ![screenhot 3](./assets/screenshots/1.jpg)  
 
 
 <br>
