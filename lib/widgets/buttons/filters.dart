@@ -5,9 +5,16 @@ import 'package:game_finder/constants/app_colors.dart';
 import 'package:game_finder/widgets/popups/bottom_sheet_controller.dart';
 
 class Filters extends StatefulWidget {
-  const Filters({Key? key, required this.title}) : super(key: key);
+  const Filters({
+    Key? key,
+    required this.title,
+    this.orderList,
+    this.filterList,
+  }) : super(key: key);
 
   final String title;
+  final Function(String)? orderList;
+  final Function(String)? filterList;
 
   @override
   State<Filters> createState() => _FiltersState();
@@ -128,12 +135,12 @@ class _FiltersState extends State<Filters> {
         );
       },
     ).whenComplete(() {
-          if (!_anySelected) {
-            setState(() {
-              _clicked = false;
-            });
-          }
+      if (!_anySelected) {
+        setState(() {
+          _clicked = false;
         });
+      }
+    });
   }
 
   void _selectOrder(String name) {
@@ -143,6 +150,13 @@ class _FiltersState extends State<Filters> {
       _selectedOrder = name;
       _anySelected = _selectedOrder.isNotEmpty && _selectedOrder != 'null';
       _activeOrder = _selectedOrder.isNotEmpty && _selectedOrder != 'null';
+
+      // if (_anySelected) {
+      //   _selectedFilter = 'null';
+      //   _selectedFilterType = 'null';
+      //   _activeFilter = false;
+      //   widget.orderList!(_selectedOrder);
+      // }
     });
   }
 
@@ -152,8 +166,14 @@ class _FiltersState extends State<Filters> {
       _clicked = false;
       _selectedFilter = name;
       _selectedFilterType = parent;
-      _anySelected =  _selectedFilter.isNotEmpty && _selectedFilter != 'null';
+      _anySelected = _selectedFilter.isNotEmpty && _selectedFilter != 'null';
       _activeFilter = _selectedFilter.isNotEmpty && _selectedFilter != 'null';
+
+      // if (_anySelected) {
+      //   _selectedOrder = 'null';
+      //   _activeOrder = false;
+      //   widget.filterList!(_selectedFilter);
+      // }
     });
   }
 }

@@ -1,6 +1,3 @@
-import 'dart:ui';
-import 'package:flutter/material.dart';
-
 class AppUrls {
   static String baseUrl = 'https://api.rawg.io/api';
   static String key = '8fba6144c7f94f1283d663001c4eb1d3';

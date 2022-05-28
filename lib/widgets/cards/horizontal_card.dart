@@ -7,7 +7,7 @@ import '../../models/platforms_model.dart';
 import '../../utilities/app_functions.dart';
 
 class HorizontalCard extends StatelessWidget {
-  HorizontalCard({
+  const HorizontalCard({
     Key? key,
     required this.title,
     required this.released,
@@ -16,11 +16,11 @@ class HorizontalCard extends StatelessWidget {
     required this.img,
   }) : super(key: key);
 
-  late int? metascore;
-  late String? img;
-  late List<ParentPlatforms>? platforms;
-  late String? title;
-  late String? released;
+  final int? metascore;
+  final String? img;
+  final List<ParentPlatforms>? platforms;
+  final String? title;
+  final String? released;
 
   @override
   Widget build(BuildContext context) {
@@ -61,69 +61,76 @@ class HorizontalCard extends StatelessWidget {
                     },
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 24,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              for (String svg in AppFunctions.setPlatformIcons(
-                                  platforms!)) ...[
-                                SvgPicture.asset(
-                                  svg,
-                                  height: 17,
-                                  width: 17,
+                              Row(
+                                children: [
+                                  for (String svg in AppFunctions.setPlatformIcons(
+                                      platforms!)) ...[
+                                    SvgPicture.asset(
+                                      svg,
+                                      height: 17,
+                                      width: 17,
+                                    ),
+                                    const SizedBox(width: 8)
+                                  ]
+                                ],
+                              ),
+                              if (metascore != null) ...[
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: 24,
+                                  width: 24,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 2,
+                                        color: metascore! >= 75
+                                            ? AppColors.green1
+                                            : metascore! >= 50
+                                                ? AppColors.yellow1
+                                                : AppColors.red1),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Center(
+                                    child: Text(metascore.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            ?.copyWith(
+                                                color: metascore! >= 75
+                                                    ? AppColors.green1
+                                                    : metascore! >= 50
+                                                        ? AppColors.yellow1
+                                                        : AppColors.red1)),
+                                  ),
                                 ),
-                                const SizedBox(width: 8)
                               ]
                             ],
                           ),
-                          if (metascore != null) ...[
-                            Container(
-                              alignment: Alignment.center,
-                              height: 24,
-                              width: 24,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 2,
-                                    color: metascore! >= 75
-                                        ? AppColors.green1
-                                        : metascore! >= 50
-                                            ? AppColors.yellow1
-                                            : AppColors.red1),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Center(
-                                child: Text(metascore.toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        ?.copyWith(
-                                            color: metascore! >= 75
-                                                ? AppColors.green1
-                                                : metascore! >= 50
-                                                    ? AppColors.yellow1
-                                                    : AppColors.red1)),
-                              ),
-                            ),
-                          ]
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        title ?? '?',
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                      Text(released == '' ? 'TBA' : released!.substring(0,4),
-                          style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    color: AppColors.blue5,
-                                  )),
-                    ],
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          title ?? '?',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                        Text(released == '' ? 'TBA' : released!.substring(0,4),
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: AppColors.blue5,
+                                    )),
+                      ],
+                    ),
                   ),
                 ),
               ],

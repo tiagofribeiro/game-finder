@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../constants/app_colors.dart';
+import 'package:game_finder/widgets/base/app_title.dart';
 
 class Header extends StatelessWidget {
   const Header({Key? key, required this.title}) : super(key: key);
@@ -26,20 +25,7 @@ class Header extends StatelessWidget {
           ),
           ]
           else ...[
-            RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: '//  ',
-                  style: Theme.of(context).textTheme.headline1?.copyWith(color: AppColors.green1,),
-                ),
-                TextSpan(
-                  text: title,
-                  style: Theme.of(context).textTheme.headline1,
-                )
-              ],
-            ),
-          ),
+            AppTitle(title: title)
           ],
           Image.asset('assets/img/login.png'),
         ],

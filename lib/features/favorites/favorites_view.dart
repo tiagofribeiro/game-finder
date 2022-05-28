@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/app_colors.dart';
 import '../../widgets/base/header.dart';
 
 class FavoritesView extends StatefulWidget {
@@ -15,7 +14,7 @@ class _SearchViewState extends State<FavoritesView> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
-      children: [
+      children: const [
         Header(title: 'favoritos'),
         // Container(color: AppColors.blue3, height: 50,)
       ],

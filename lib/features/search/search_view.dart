@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_finder/widgets/base/header.dart';
-import 'package:game_finder/widgets/cards/vertical_card.dart';
 import 'package:game_finder/widgets/inputs/search_bar.dart';
-
-import '../../constants/app_colors.dart';
+import 'package:game_finder/widgets/lists/vertical_list.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({Key? key}) : super(key: key);
@@ -13,26 +11,47 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
+  bool _searchRequested = false;
+  late String searchQuery;
+
+  void searchGames(String query) {
+    setState(() {
+      _searchRequested = true;
+      searchQuery = query;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Header(title: 'busca'),
+        const Header(title: 'busca'),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                SearchBar(),
-                SizedBox(height: 20),
-                Expanded(
+                SizedBox(
+                  height: 50,
+                  child: SearchBar(
+                    onSearch: searchGames,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                if (_searchRequested) ...[
+                  Expanded(
                     child: ListView(
-                  children: [
-                    // VerticalCard(),
-                    // VerticalCard(),
-                    // VerticalCard(),
-                  ],
-                )),
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      children: [
+                        VerticalList(
+                          screen: 'busca',
+                          query: searchQuery,
+                        ),
+                      ],
+                    ),
+                  ),
+                ]
               ],
             ),
           ),

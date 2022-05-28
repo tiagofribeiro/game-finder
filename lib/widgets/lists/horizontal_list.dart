@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../../models/game_list_model.dart';
 import '../../services/app_services.dart';
+import '../base/app_title.dart';
 import '../cards/horizontal_card.dart';
 
 class HorizontalList extends StatefulWidget {
@@ -30,22 +31,7 @@ class _HorizontalListState extends State<HorizontalList> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: '//  ',
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
-                        color: AppColors.green1,
-                      ),
-                ),
-                TextSpan(
-                  text: widget.title,
-                  style: Theme.of(context).textTheme.headline1,
-                )
-              ],
-            ),
-          ),
+          AppTitle(title: widget.title),
           const SizedBox(
             height: 10,
           ),
@@ -57,7 +43,9 @@ class _HorizontalListState extends State<HorizontalList> {
             height: 24,
           ),
           FutureBuilder<GameList>(
-              future: widget.title == 'novos jogos' ? AppServices().fetchNewGamesList() : AppServices().fetchBestGamesList(),
+              future: widget.title == 'novos jogos'
+                  ? AppServices().fetchNewGamesList(20)
+                  : AppServices().fetchBestGamesList(20),
               builder: ((context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -68,25 +56,27 @@ class _HorizontalListState extends State<HorizontalList> {
                   return const Text('nao deu :(');
                 } else {
                   if (snapshot.hasData) {
-                    List editedList = snapshot.data!.results!..removeRange(0, 2);
+                    List editedList = snapshot.data!.results!
+                      ..removeRange(0, 2);
                     _games = editedList;
-                    
                   }
                   return SizedBox(
-                    height: 277,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: _games.map((game) {
-                        return HorizontalCard(
-                          title: game.name,
-                          img: game.backgroundImage,
-                          metascore: game.metacritic,
-                          released: game.released ?? '',
-                          platforms: game.parentPlatforms,
-                        );
-                      }).toList(),
-                    ),
-                  );
+                      height: 275,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _games.length,
+                        itemBuilder: (context, index) {
+                          return HorizontalCard(
+                            title: _games[index].name,
+                            img: _games[index].backgroundImage,
+                            metascore: _games[index].metacritic,
+                            released: _games[index].released ?? '',
+                            platforms: _games[index].parentPlatforms,
+                          );
+                        },
+                      ));
                 }
               })),
         ],

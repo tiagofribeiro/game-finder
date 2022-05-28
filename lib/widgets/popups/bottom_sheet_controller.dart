@@ -8,6 +8,7 @@ import '../../constants/app_colors.dart';
 ///
 /// This class is HUGE! I didn't have the time to fix it, sorry :(
 /// Anyway, it stabilishes all the BottomSheet flows. Good luck!
+// ignore: must_be_immutable
 class AppBottomSheet extends StatefulWidget {
   AppBottomSheet({
     Key? key,

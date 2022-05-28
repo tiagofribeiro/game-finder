@@ -14,12 +14,14 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: true,
       children: [
         const Header(title: 'home'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: const [
               HorizontalList(
                 title: 'novos jogos',
@@ -30,8 +32,8 @@ class _HomeViewState extends State<HomeView> {
                 subtitle: 'os melhores jogos de acordo com o Metacritic',
               ),
               VerticalList(
-                screen: 'home',
-              ),
+                  screen: 'home',
+                ),
             ],
           ),
         ),
