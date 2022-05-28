@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:game_finder/widgets/buttons/favorite.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_card_styles.dart';
@@ -36,34 +37,41 @@ class HorizontalCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Column(
               children: [
-                SizedBox(
-                  width: double.maxFinite,
-                  height: 140,
-                  child: Image.network(
-                    img ?? '',
-                    errorBuilder: ((context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/img/game_placeholder.png',
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: double.maxFinite,
+                      height: 140,
+                      child: Image.network(
+                        img ?? '',
+                        errorBuilder: ((context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/img/game_placeholder.png',
+                            fit: BoxFit.cover,
+                          );
+                        }),
                         fit: BoxFit.cover,
-                      );
-                    }),
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                          child: CircularProgressIndicator(
-                              color: AppColors.green1,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null));
-                    },
-                  ),
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: AppColors.green1,
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null));
+                        },
+                      ),
+                    ),
+                    const Favorite(),
+                  ],
                 ),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
+                    padding:
+                        const EdgeInsets.only(left: 20, top: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -74,8 +82,9 @@ class HorizontalCard extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  for (String svg in AppFunctions.setPlatformIcons(
-                                      platforms!)) ...[
+                                  for (String svg
+                                      in AppFunctions.setPlatformIcons(
+                                          platforms!)) ...[
                                     SvgPicture.asset(
                                       svg,
                                       height: 17,
@@ -124,7 +133,7 @@ class HorizontalCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.headline2,
                         ),
-                        Text(released == '' ? 'TBA' : released!.substring(0,4),
+                        Text(released == '' ? 'TBA' : released!.substring(0, 4),
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                       color: AppColors.blue5,
