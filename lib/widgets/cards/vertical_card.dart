@@ -5,6 +5,7 @@ import 'package:game_finder/models/platforms_model.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_card_styles.dart';
 import '../../utilities/app_functions.dart';
+import '../buttons/favorite.dart';
 
 class VerticalCard extends StatelessWidget {
   const VerticalCard({
@@ -36,34 +37,41 @@ class VerticalCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Column(
               children: [
-                SizedBox(
-                  width: double.maxFinite,
-                  height: 180,
-                  child: Image.network(
-                    img ?? '',
-                    errorBuilder: ((context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/img/game_placeholder.png',
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: double.maxFinite,
+                      height: 180,
+                      child: Image.network(
+                        img ?? '',
+                        errorBuilder: ((context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/img/game_placeholder.png',
+                            fit: BoxFit.cover,
+                          );
+                        }),
                         fit: BoxFit.cover,
-                      );
-                    }),
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                          child: CircularProgressIndicator(
-                              color: AppColors.green1,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null));
-                    },
-                  ),
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: AppColors.green1,
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null));
+                        },
+                      ),
+                    ),
+                    const Favorite(),
+                  ],
                 ),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
+                    padding:
+                        const EdgeInsets.only(left: 20, top: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

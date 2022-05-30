@@ -2,8 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:game_finder/constants/app_colors.dart';
 import 'package:lottie/lottie.dart';
+
+import '../base/app_toast.dart';
 
 class Favorite extends StatefulWidget {
   const Favorite({Key? key}) : super(key: key);
@@ -16,11 +19,16 @@ class _FavoriteState extends State<Favorite> with TickerProviderStateMixin {
   bool _isFavorite = false;
   bool _isAnimating = false;
 
+  late FToast fToast;
+
   late final AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
+
+    fToast = FToast();
+    fToast.init(context);
 
     _animationController = AnimationController(vsync: this)
       ..addStatusListener((status) {
@@ -31,6 +39,19 @@ class _FavoriteState extends State<Favorite> with TickerProviderStateMixin {
           });
         }
       });
+  }
+
+  void showToast(bool favorite) {
+    fToast.showToast(
+        child: AppToast(favorite: favorite),
+        // gravity: ToastGravity.BOTTOM,
+        toastDuration: const Duration(seconds: 2),
+        positionedToastBuilder: (context, child) {
+          return Positioned(
+            bottom: 76,
+            width: MediaQuery.of(context).size.width,
+            child: child,);
+        });
   }
 
   Widget setFavoriteState() {
@@ -61,7 +82,7 @@ class _FavoriteState extends State<Favorite> with TickerProviderStateMixin {
             () {
               _isAnimating = true;
               _animationController
-                ..duration = composition.duration
+                ..duration = const Duration(milliseconds: 500)
                 ..reset()
                 ..forward();
             },
@@ -80,7 +101,14 @@ class _FavoriteState extends State<Favorite> with TickerProviderStateMixin {
         child: InkWell(
           onTap: () {
             setState(() {
-              _isAnimating = true;
+              if (_isFavorite) {
+                _isAnimating = false;
+                _isFavorite = false;
+                showToast(false);
+              } else {
+                _isAnimating = true;
+                showToast(true);
+              }
             });
           },
           child: Stack(

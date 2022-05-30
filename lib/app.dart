@@ -30,8 +30,7 @@ class FirstView extends StatefulWidget {
 
 class _FirstViewState extends State<FirstView> {
   int _selectedPageIndex = 1;
-
-  PageController pageController = PageController();
+  late PageController pageController;
 
   @override
   void initState() {
@@ -78,7 +77,7 @@ class _FirstViewState extends State<FirstView> {
                         height: 24, width: 24, color: AppColors.green1),
                     label: 'home'),
                 BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/img/icons/favorito-ativo.svg',
+                    icon: SvgPicture.asset('assets/img/icons/favorito-inativo.svg',
                         height: 24, width: 24, color: AppColors.blue5),
                     activeIcon: SvgPicture.asset(
                         'assets/img/icons/favorito-ativo.svg',
